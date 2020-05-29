@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block stylesheet %}
+<style>
+    body {
+        padding-left: 240px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="sidebar">
+    <ul class="navbar sans">
+    {% for index in index_list %}
+        <li class="nav-item"><a href="{{ index | first }}">{{ index | last }}</a></li>
+    {% endfor %}
+    </ul>
+    <div class="copy">
+        Copyright &copy; 2020 BaeJino.
+    </div>
+</div>
+<div class="container">
+    <article class="article">
+        {{ content | safe }}
+    </article>
+</div>
+{% endblock %}

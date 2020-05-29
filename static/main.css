@@ -1,0 +1,154 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    } 50% {
+        opacity: 0;
+    } 100% {
+        opacity: 1;
+    }
+}
+
+.blink {
+    animation: blink .8s infinite;
+}
+
+.container {
+    margin: 0 auto;
+    width: calc(100% - 30px);
+    max-width: 700px;
+    padding: 0 15px;
+    box-sizing: content-box;
+}
+
+.sidebar {
+    color: rgba(25, 23, 17, 0.6);
+    background: rgb(247, 246, 243);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 240px;
+    height: 100vh;
+}
+
+.copy {
+    border-top: 1px solid #ccc;
+    color: #000;
+    position: fixed;
+    width: 240px;
+    bottom: 0;
+    left: 0;
+    padding: 10px;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Noto Sans KR", sans-serif;
+    font-size: 0.8em;
+}
+
+.sidebar .navbar {
+    margin-top: 20px;
+    margin-left: 20px;
+    list-style: none;
+    line-height: 2;
+}
+
+.sidebar a {
+    color: rgba(25, 23, 17, 0.6);
+    text-decoration: none;
+}
+
+.article {
+    padding: 150px 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Noto Sans KR", sans-serif;
+    font-size: 1.028em;
+    line-height: 1.865;
+}
+
+.article * {
+    margin-bottom: 1rem;
+}
+
+.article h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.article h6 {
+    padding: 16px 16px 16px 12px;
+    border-radius: 3px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+    background: rgba(235, 236, 237, 0.3);
+    font-size: 1.028em;
+    font-weight: 500;
+}
+
+.article blockquote {
+    border-left: 3px solid #000;
+    padding-left: 0.9em;
+    padding-right: 0.9em;
+}
+
+.article code {
+    background-color: #eee;
+    padding: 3px;
+    border-radius: 5px;
+}
+
+.article video {
+    max-width: 100%;
+}
+
+.creator {
+    padding-top: 30vh;
+    text-align: center;
+}
+
+.link {
+    color: blue;
+    text-decoration: underline;
+}
+
+.ga-form {
+    padding: 30px 0;
+    width: 400px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.ga-form input,
+.ga-form button {
+    margin-bottom: 1rem;
+    border: none;
+    background-color: #eee;
+    border-radius: 15px;
+    width: 100%;
+    text-align: center;
+    padding: 15px 0;
+}
+
+.ga-form input:focus {
+    outline: none;
+}
+
+.ga-form button {
+    color: #fff;
+    background-color: #000;
+}
+
+.article .highlight {
+    background-color: #fff9aa;
+}
+
+.serif {
+    font-family: 'Noto Serif KR', serif;
+}
+
+.sans {
+    font-family: -apple-system, BlinkMacSystemFont, "Noto Sans KR", sans-serif;
+}

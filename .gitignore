@@ -8,6 +8,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+mvenv/
 build/
 develop-eggs/
 dist/
@@ -57,7 +58,10 @@ coverage.xml
 
 # Django stuff:
 *.log
+*.ini
+*.sock
 local_settings.py
+settings.py
 db.sqlite3
 db.sqlite3-journal
 
