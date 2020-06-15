@@ -20,3 +20,4 @@ def measurement_protocol(tid, cid, host, path, agent=None, referer=None):
         'Content-Type': 'application/x-www-form-urlencoded'
     }
     res = req.post('http://www.google-analytics.com/collect', data=data, headers=headers)
+    return res

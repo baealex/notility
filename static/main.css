@@ -152,3 +152,14 @@
 .sans {
     font-family: -apple-system, BlinkMacSystemFont, "Noto Sans KR", sans-serif;
 }
+
+@media screen and (max-width: 786px) {
+    .sidebar {
+        margin-left: -240px;
+    }
+
+    .copy {
+        background-color: #fff;
+        width: 100vw;
+    }
+}
