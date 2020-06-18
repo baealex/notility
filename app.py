@@ -55,32 +55,30 @@ def google_analytics():
         request.args['host']
         request.args['path']
     except:
-        print('Request - Invalid Parameter')
         return 'Invalid Parameter'
 
     if not request.method == 'GET':
-        print('Request - Invalid Method')
         return 'Invalid Method'
     
-    user_ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
-
     blacklist = """
     52.36.186.228|
     """
 
-    if user_ip in blacklist:
-        print('Request : Blacklist User')
+    uip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+    
+    if uip in blacklist:
         return send_file('assets/blank.png', mimetype='image/png')
 
-    cid = fn.randstr(10)
-    if 'cid' in session:
-        cid = session['cid']
+    uid = fn.randstr(9)
+    if 'uid' in session:
+        uid = session['uid']
     else:
-        session['cid'] = cid
+        session['uid'] = uid
     
     ga.measurement_protocol(
         tid = request.args['id'],
-        cid = cid,
+        uid = uid,
+        uip = uip,
         host = request.args['host'],
         path = request.args['path'],
         agent = request.headers.get('User-Agent', None),

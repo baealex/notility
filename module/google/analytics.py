@@ -1,10 +1,11 @@
 import requests as req
 
-def measurement_protocol(tid, cid, host, path, agent=None, referer=None):
+def measurement_protocol(tid, uid, uip, host, path, agent=None, referer=None):
     data = {
         'v': '1',
         'tid': tid,
-        'cid': cid,
+        'uid': uid,
+        'uip': uip,
         't': 'pageview',
         'dh': host,
         'dp': path
