@@ -2,6 +2,44 @@
 
 {% block title %}Link Creator{% endblock %}
 
+{% block stylesheet %}
+<style>
+    body {
+        background-color: #fff;
+    }
+    .creator {
+        padding-top: 5vh;
+        text-align: center;
+    }
+    .ga-form {
+        padding: 30px 0;
+        width: 400px;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .ga-form input,
+    .ga-form button {
+        margin-bottom: 1rem;
+        border: none;
+        background-color: #eee;
+        border-radius: 15px;
+        width: 100%;
+        text-align: center;
+        padding: 15px 0;
+    }
+
+    .ga-form input:focus {
+        outline: none;
+    }
+
+    .ga-form button {
+        color: #fff;
+        background-color: #000;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container">
     <div class="creator">

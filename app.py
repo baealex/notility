@@ -1,48 +1,22 @@
+import os
+import json
+import datetime
+
 import module.function as fn
 import module.google.analytics as ga
 
 from module import settings
 
 from flask import (
-    Flask, request, render_template, send_file, make_response, session, abort)
+    Flask, request, render_template, send_file, make_response, session, abort, redirect)
 
 application = Flask(__name__)
 application.debug = settings.DEBUG
 application.secret_key = settings.SECRET_KEY
 
-def read_content(m_file):
-    with open(m_file, 'r') as read_file:
-        return fn.parsedown(read_file.read())
-
-index_list = [
-    ['/', '😀 노션 도우미'],
-    ['/docs/guide', '📒 노션 가이드'],
-    ['/docs/google-analytics', '🌈 노션 구글 애널리틱스']
-]
-
 @application.route("/")
 def docs_main():
-    title = index_list[0][1]
-    content = read_content('README.md')
-    return render_template('docs.html', title=title, content=content, index_list=index_list)
-
-@application.route("/docs/<name>")
-def docs_basic(name):
-    docs = {
-        'guide': {
-            'title': index_list[1][1],
-            'file': 'docs/guide.md',
-        },
-        'google-analytics': {
-            'title': index_list[2][1],
-            'file': 'docs/google-analytics.md',
-        }
-    }
-    if name in docs:
-        title = docs[name]['title']
-        content = read_content(docs[name]['file'])
-        return render_template('docs.html', title=title, content=content, index_list=index_list)
-    abort(404)
+    return redirect('https://www.notion.so/28dc1eb045974dab998c40c11f85c2aa')
 
 @application.route("/ga/creator")
 def google_analytics_creator():
@@ -79,6 +53,26 @@ def google_analytics():
     if hide == 'true':
         return send_file('assets/blank.png', mimetype='image/png', cache_timeout=-1)
     return send_file('assets/ga.png', mimetype='image/png', cache_timeout=-1)
+
+@application.route("/comment/<pk>", methods=['GET', 'POST'])
+def comment(pk):
+    file_name = 'data/' + pk + '.json'
+    file_data = list()
+
+    if os.path.isfile(file_name): 
+        with open(file_name, 'r') as read_file:
+            file_data = json.load(read_file)
+    
+    if request.method == 'POST':
+        file_data.append({
+            'nickname': request.form['nickname'],
+            'content': request.form['content'],
+            'created': str(datetime.datetime.now()),
+        })
+        with open(file_name, "w") as json_file:
+            json.dump(file_data, json_file)
+
+    return render_template('comment.html', comments=reversed(file_data))
 
 if __name__ == "__main__":
     application.run(host='0.0.0.0', port=15000)
