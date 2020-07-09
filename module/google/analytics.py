@@ -1,15 +1,17 @@
 import requests as req
 
-def measurement_protocol(tid, uid, uip, host, path, agent=None, referer=None):
+def measurement_protocol(tid, cid, host, path, uip=None, agent=None, referer=None):
     data = {
         'v': '1',
         'tid': tid,
-        'uid': uid,
-        'uip': uip,
+        'cid': cid,
         't': 'pageview',
         'dh': host,
         'dp': path
     }
+
+    if uip:
+        data.update({'uip': uip})
 
     if agent:
         data.update({'ua': agent})
