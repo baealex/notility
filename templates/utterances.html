@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Comment{% endblock %}
+
+{% block stylesheet %}
+<style>
+    {% if theme == 'dark'%}
+    body {
+        background-color: #000;
+    }
+    ::-webkit-scrollbar {
+        width: 3px;        
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: #555;
+    }
+    {% else %}
+    body {
+        background-color: #fff;
+    }
+    ::-webkit-scrollbar {
+        width: 3px;        
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: #aaa;
+    }
+    {% endif %}
+    .utterances {
+        max-width: 100% !important;
+    }
+    
+</style>
+{% endblock %}
+
+{% block content %}
+<script src="https://utteranc.es/client.js"
+    repo="{{ username }}/{{ repository }}"
+    issue-term="pathname"
+    theme="github-{% if theme == 'dark'%}dark{% else %}light{% endif %}"
+    crossorigin="anonymous"
+    async>
+</script>
+{% endblock %}

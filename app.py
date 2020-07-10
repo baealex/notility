@@ -54,9 +54,14 @@ def google_analytics():
         return send_file('assets/blank.png', mimetype='image/png', cache_timeout=-1)
     return send_file('assets/ga.png', mimetype='image/png', cache_timeout=-1)
 
-@application.route("/comment/<pk>", methods=['GET', 'POST'])
-def comment(pk):
-    file_name = 'data/' + pk + '.json'
+@application.route("/ut/<username>/<repository>/<pk>", methods=['GET'])
+def utterances(username, repository, pk):
+    theme = request.args.get('theme', 'light')
+    return render_template('utterances.html', username=username, repository=repository, theme=theme)
+
+@application.route("/lc/<pk>", methods=['GET', 'POST'])
+def light_comment(pk):
+    file_name = 'light-comment/' + pk + '.json'
     file_data = list()
 
     if os.path.isfile(file_name): 
@@ -64,13 +69,14 @@ def comment(pk):
             file_data = json.load(read_file)
     
     if request.method == 'POST':
-        file_data.append({
-            'nickname': request.form['nickname'],
-            'content': request.form['content'],
-            'created': str(datetime.datetime.now()),
-        })
-        with open(file_name, "w") as json_file:
-            json.dump(file_data, json_file)
+        if os.path.isfile(file_name): 
+            file_data.append({
+                'nickname': request.form['nickname'],
+                'content': request.form['content'],
+                'created': str(datetime.datetime.now()),
+            })
+            with open(file_name, "w") as json_file:
+                json.dump(file_data, json_file)
 
     return render_template('comment.html', comments=reversed(file_data))
 
