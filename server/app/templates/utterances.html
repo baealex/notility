@@ -6,7 +6,7 @@
 <style>
     {% if theme == 'dark'%}
     body {
-        background-color: #000;
+        background-color: #2f3437;
     }
     ::-webkit-scrollbar {
         width: 3px;        
@@ -32,12 +32,19 @@
 </style>
 {% endblock %}
 
-{% block content %}
+{% block script %}
 <script src="https://utteranc.es/client.js"
     repo="{{ username }}/{{ repository }}"
     issue-term="pathname"
     theme="github-{% if theme == 'dark'%}dark{% else %}light{% endif %}"
     crossorigin="anonymous"
     async>
+</script>
+<script>
+    if(self !== top) {
+        
+    } else {
+        location.href = "https://www.notion.so/{{ pk }}";
+    }
 </script>
 {% endblock %}

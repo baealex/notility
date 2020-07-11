@@ -57,7 +57,7 @@ def google_analytics():
 @application.route("/ut/<username>/<repository>/<pk>", methods=['GET'])
 def utterances(username, repository, pk):
     theme = request.args.get('theme', 'light')
-    return render_template('utterances.html', username=username, repository=repository, theme=theme)
+    return render_template('utterances.html', username=username, repository=repository, pk=pk, theme=theme)
 
 @application.route("/lc/<pk>", methods=['GET', 'POST'])
 def light_comment(pk):
@@ -78,7 +78,7 @@ def light_comment(pk):
             with open(file_name, "w") as json_file:
                 json.dump(file_data, json_file)
 
-    return render_template('comment.html', comments=reversed(file_data))
+    return render_template('comment.html', comments=reversed(file_data), pk=pk)
 
 if __name__ == "__main__":
-    application.run(host='0.0.0.0', port=15000)
+    application.run(host='0.0.0.0', port=5000)

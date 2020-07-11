@@ -1,0 +1,11 @@
+version: "2.0"
+
+services:
+  app:
+    build:
+      context: ./server
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./server/app/light-comment:/app/light-comment
+    ports:
+      - 16000:5000

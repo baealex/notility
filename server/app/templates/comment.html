@@ -35,6 +35,18 @@
         color: #aaa;
         font-size: 12px;
     }
+    ::-webkit-scrollbar {
+        width: 3px;        
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: #aaa;
+    }
+    .copy {
+        color: #aaa;
+    }
+    .copy a {
+        color: #ccc;
+    }
 </style>
 {% endblock %}
 
@@ -55,5 +67,18 @@
         </div>
         {% endfor %}
     </div>
+    <div class="copy">
+        Light Comment by <a href="https://notion.doum.app">Notion Doumi</a>
+    </div>
 </div>
+{% endblock %}
+
+{% block script %}
+<script>
+    if(self !== top) {
+        
+    } else {
+        location.href = "https://www.notion.so/{{ pk }}";
+    }
+</script>
 {% endblock %}
