@@ -5,6 +5,7 @@ import datetime
 import module.function as fn
 import module.google.analytics as ga
 
+from module.google.spreadb import GspreaDB
 from module import settings
 
 from flask import (
@@ -61,24 +62,22 @@ def utterances(username, repository, pk):
 
 @application.route("/lc/<pk>", methods=['GET', 'POST'])
 def light_comment(pk):
-    file_name = 'light-comment/' + pk + '.json'
-    file_data = list()
-
-    if os.path.isfile(file_name): 
-        with open(file_name, 'r') as read_file:
-            file_data = json.load(read_file)
+    db = GspreaDB()
+    comments_data = db.get_value(pk)
+    if comments_data:
+        comments_data = json.loads(comments_data)
+    else:
+        comments_data = list()
     
     if request.method == 'POST':
-        if os.path.isfile(file_name): 
-            file_data.append({
-                'nickname': request.form['nickname'],
-                'content': request.form['content'],
-                'created': str(datetime.datetime.now()),
-            })
-            with open(file_name, "w") as json_file:
-                json.dump(file_data, json_file)
+        comments_data.append({
+            'nickname': request.form['nickname'],
+            'content': request.form['content'],
+            'created': str(datetime.datetime.now()),
+        })
+        db.update_value(pk, json.dumps(comments_data))
 
-    return render_template('comment.html', comments=reversed(file_data), pk=pk)
+    return render_template('comment.html', comments=reversed(comments_data), pk=pk)
 
 if __name__ == "__main__":
     application.run(host='0.0.0.0', port=5000)

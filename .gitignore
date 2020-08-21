@@ -74,7 +74,6 @@ instance/
 
 # Sphinx documentation
 docs/_build/
-light-comment/
 
 # PyBuilder
 target/
@@ -132,3 +131,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Secret file
+key.json
