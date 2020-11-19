@@ -6,6 +6,6 @@ services:
       context: ./server
       dockerfile: ./Dockerfile
     volumes:
-      - ./server/app/light-comment:/app/light-comment
+      - ./server/app:/app
     ports:
       - 16000:5000

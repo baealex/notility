@@ -48,13 +48,38 @@
     .copy a {
         color: #ccc;
     }
+    .full-mask {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 9999;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(10px);
+    }
+    .full-mask.light {
+        background-color: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(0px);
+    }
+    .loading {
+        z-index: 9999;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+    }
+    .m-center {
+        margin: 47vh auto;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
 <div style="padding: 15px;">
     <div class="comment-form noto">
-        <form method="POST">
+        <form method="POST" id="comment">
             <input type="text" name="nickname" placeholder="닉네임" autocomplete="off" required>
             <input type="text" name="content" placeholder="댓글을 입력하세요" autocomplete="off" required>
             <input type="submit">
@@ -76,6 +101,16 @@
 
 {% block script %}
 <script>
+    document.querySelector('#comment').addEventListener('submit', function() {
+        document.body.insertAdjacentHTML("afterbegin", `
+            <div class="loading">
+                <div class="full-mask light">
+                    <div class="m-center dot-bricks"></div>
+                </div>
+            </div>
+        `);
+    });
+
     if(self !== top) {
         
     } else {
