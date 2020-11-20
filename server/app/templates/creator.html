@@ -57,5 +57,25 @@
 {% endblock %}
 
 {% block script %}
-<script type="text/javascript" src="/static/main.js"></script>
+<script type="text/javascript">
+    var gaButton = document.querySelector('.ga-form button');
+    gaButton && gaButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        var form = document.querySelector('.ga-form');
+        var id = form.id.value;
+        if(id === '')
+            id = 'UA-XXXX-YY';
+        var host = form.host.value;
+        if(host === '')
+            host = 'your.domain.com';
+        var path = form.path.value;
+        if(path === '')
+            path = '/page/path';
+        var link = 'https://notility.baejino.com/ga?id=' + id + '&host=' + host + '&path=' + path;
+        if(form.hide.checked) {
+            link += '&hide=true';
+        }
+        document.querySelector('#link').textContent = link;
+    });
+</script>
 {% endblock %}
