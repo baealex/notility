@@ -41,11 +41,12 @@
     ::-webkit-scrollbar-thumb {
         background-color: #aaa;
     }
-    .copy {
+    .lc-copy {
         width: 100%;
         color: #aaa;
+        background-color: #fff;
     }
-    .copy a {
+    .lc-copy a {
         color: #ccc;
     }
     .full-mask {
@@ -77,7 +78,7 @@
 {% endblock %}
 
 {% block content %}
-<div style="padding: 15px;">
+<div style="padding: 15px; margin-bottom: 30px;">
     <div class="comment-form noto">
         <form method="POST" id="comment">
             <input type="text" name="nickname" placeholder="닉네임" autocomplete="off" required>
@@ -93,7 +94,7 @@
         </div>
         {% endfor %}
     </div>
-    <div class="copy">
+    <div class="lc-copy">
         Light Comment by <a href="https://notility.baejino.com">Notility</a>
     </div>
 </div>
@@ -101,8 +102,12 @@
 
 {% block script %}
 <script>
+    function $html(str) {
+        return str.replace(/\>(\s)*\</g, '\>\<').trim();
+    }
+
     document.querySelector('#comment').addEventListener('submit', function() {
-        document.body.insertAdjacentHTML("afterbegin", `
+        document.body.insertAdjacentHTML("afterbegin", $html`
             <div class="loading">
                 <div class="full-mask light">
                     <div class="m-center dot-bricks"></div>
