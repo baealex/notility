@@ -42,6 +42,13 @@
         background-color: #aaa;
     }
     .lc-copy {
+        border-top: 1px solid #ccc;
+        color: #000;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        padding: 10px;
+        box-sizing: border-box;
         width: 100%;
         color: #aaa;
         background-color: #fff;
@@ -102,12 +109,8 @@
 
 {% block script %}
 <script>
-    function $html(str) {
-        return str.replace(/\>(\s)*\</g, '\>\<').trim();
-    }
-
     document.querySelector('#comment').addEventListener('submit', function() {
-        document.body.insertAdjacentHTML("afterbegin", $html`
+        document.body.insertAdjacentHTML("afterbegin", `
             <div class="loading">
                 <div class="full-mask light">
                     <div class="m-center dot-bricks"></div>
