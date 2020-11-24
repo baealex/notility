@@ -70,12 +70,22 @@ def light_comment(pk):
         comments_data = list()
     
     if request.method == 'POST':
-        comments_data.append({
-            'nickname': request.form['nickname'],
-            'content': request.form['content'],
-            'created': str(datetime.datetime.now()),
-        })
-        db.update_value(pk, json.dumps(comments_data))
+        uip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+        primary_key = fn.hashing(request.form['content'].encode())
+        has_key = False
+        for comment in comments_data:
+            if comment['pk'] == primary_key:
+                has_key = True
+                break
+        if not has_key:
+            comments_data.append({
+                'pk': primary_key,
+                'nickname': request.form['nickname'],
+                'content': request.form['content'],
+                'created': str(datetime.datetime.now()),
+                'uip': uip
+            })
+            db.update_value(pk, json.dumps(comments_data))
 
     return render_template('comment.html', comments=reversed(comments_data), pk=pk)
 

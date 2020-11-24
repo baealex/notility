@@ -1,4 +1,7 @@
 import random
+import base64
+import hashlib
+
 import requests as req
 
 from . import settings
@@ -13,3 +16,6 @@ def randstr(length):
 
 def make_cid():
     return randstr(8) + '-' + randstr(4) + '-' + randstr(4) + '-' + randstr(4) + '-' + randstr(12)
+
+def hashing(value):
+    return base64.b64encode(hashlib.sha256(value).digest()).decode()
