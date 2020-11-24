@@ -71,7 +71,10 @@ def light_comment(pk):
     
     if request.method == 'POST':
         uip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
-        primary_key = fn.hashing(request.form['content'].encode())
+        primary_key = fn.hashing(
+            request.form['nickname'].encode() +
+            request.form['content'].encode()
+        )
         has_key = False
         for comment in comments_data:
             if comment['pk'] == primary_key:
