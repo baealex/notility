@@ -72,7 +72,7 @@
         background-color: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(0px);
     }
-    .loading {
+    .captcha {
         z-index: 9999;
         position: fixed;
         top: 0;
@@ -82,6 +82,7 @@
     }
     .m-center {
         margin: 47vh auto;
+        text-align: center;
     }
 </style>
 {% endblock %}
@@ -93,6 +94,7 @@
             <input type="text" name="nickname" placeholder="닉네임" autocomplete="off" required>
             <input type="text" name="content" placeholder="댓글을 입력하세요" autocomplete="off" required>
             <input type="submit">
+            <input type="hidden" name="captcha">
         </form>
     </div>
     <div class="comment-list">
@@ -103,6 +105,13 @@
         </div>
         {% endfor %}
     </div>
+    <div id="captcha" class="captcha" style="display: none">
+        <div class="full-mask light">
+            <div class="m-center">
+                <div class="h-captcha" data-sitekey="{{ client_key }}" data-callback="onSubmit"></div>
+            </div>
+        </div>
+    </div>
     <div class="lc-copy">
         Light Comment by <a href="https://notility.baejino.com">Notility</a>
     </div>
@@ -110,16 +119,22 @@
 {% endblock %}
 
 {% block script %}
+<script src="https://hcaptcha.com/1/api.js" async defer></script>
 <script>
-    document.querySelector('#comment').addEventListener('submit', function() {
-        document.body.insertAdjacentHTML("afterbegin", `
-            <div class="loading">
-                <div class="full-mask light">
-                    <div class="m-center dot-bricks"></div>
-                </div>
-            </div>
-        `);
+    var solveCaptcha = false;
+
+    document.querySelector('#comment').addEventListener('submit', function(e) {
+        if(!solveCaptcha) {
+            e.preventDefault();
+            document.querySelector('#captcha').style.display = 'block'
+        }
     });
+
+    function onSubmit(token) {
+        solveCaptcha = true;
+        document.querySelector('#comment').captcha.value = token;
+        document.querySelector('#comment').submit();
+    }
 
     if(self !== top) {
         

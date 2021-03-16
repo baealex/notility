@@ -5,7 +5,7 @@ import datetime
 import module.function as fn
 import module.google.analytics as ga
 
-from module.google.spreadb import GspreaDB
+from module import hcaptcha
 from module import settings
 
 from flask import (
@@ -62,35 +62,30 @@ def utterances(username, repository, pk):
 
 @application.route("/lc/<pk>", methods=['GET', 'POST'])
 def light_comment(pk):
-    db = GspreaDB()
-    comments_data = db.get_value(pk)
-    if comments_data:
-        comments_data = json.loads(comments_data)
-    else:
-        comments_data = list()
+    file_name = f'data/{pk}.json'
+    file_data = []
+
+    if os.path.isfile(file_name): 
+        with open(file_name, 'r', encoding='utf-8') as read_file:
+            file_data = json.load(read_file)
+            if not file_data:
+                file_data = []
     
     if request.method == 'POST':
-        uip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
-        primary_key = fn.hashing(
-            request.form['nickname'].encode() +
-            request.form['content'].encode()
-        )
-        has_key = False
-        for comment in comments_data:
-            if comment['pk'] == primary_key:
-                has_key = True
-                break
-        if not has_key:
-            comments_data.append({
-                'pk': primary_key,
-                'nickname': request.form['nickname'],
-                'content': request.form['content'],
-                'created': str(datetime.datetime.now()),
-                'uip': uip
-            })
-            db.update_value(pk, json.dumps(comments_data))
+        captcha = request.form['captcha']
+        is_vaild = hcaptcha.verify(captcha)
+        if not is_vaild:
+            return 'TOKEN VERIFY FAIL'
 
-    return render_template('comment.html', comments=reversed(comments_data), pk=pk)
+        file_data.append({
+            'nickname': request.form['nickname'],
+            'content': request.form['content'],
+            'created': str(datetime.datetime.now()),
+        })
+        with open(file_name, 'w', encoding='utf-8') as json_file:
+            json.dump(file_data, json_file)
+
+    return render_template('comment.html', comments=reversed(file_data), pk=pk, client_key=settings.HCAPTCHA_CLIENT_KEY)
 
 if __name__ == "__main__":
     application.run(host='0.0.0.0', port=5000)
