@@ -4,8 +4,6 @@ import hashlib
 
 import requests as req
 
-from . import settings
-
 def randstr(length):
     rstr = '0123456789abcdef'
     rstr_len = len(rstr) - 1

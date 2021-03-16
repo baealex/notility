@@ -1,5 +1,5 @@
 import requests
-from module import settings
+import settings
 
 def verify(token):
     data = {

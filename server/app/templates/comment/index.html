@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Comment{% endblock %}
+
+{% block stylesheet %}
+<style>{% include 'comment/style.css' %}</style>
+{% endblock %}
+
+{% block content %}
+<div style="padding: 15px; margin-bottom: 30px;">
+    <div class="comment-form noto">
+        <form method="POST" id="comment">
+            <input type="text" name="nickname" placeholder="닉네임" autocomplete="off" required>
+            <input type="text" name="content" placeholder="댓글을 입력하세요" autocomplete="off" required>
+            <input type="submit">
+            <input type="hidden" name="captcha">
+        </form>
+    </div>
+    <div class="comment-list">
+        {% for comment in comments %}
+        <div class="comment">
+            <p><span class="nickname serif">{{ comment.nickname }}</span> <span class="date">{{ comment.created[:16] }}</span></p>
+            <p class="sans">{{ comment.content }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    <div id="captcha" class="captcha" style="display: none">
+        <div class="full-mask light">
+            <div class="m-center">
+                <div class="h-captcha" data-sitekey="{{ client_key }}" data-callback="onSubmit"></div>
+            </div>
+        </div>
+    </div>
+    <div class="lc-copy">
+        Light Comment by <a href="https://notility.baejino.com">Notility</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="https://hcaptcha.com/1/api.js" async defer></script>
+<script>{% include 'comment/script.js' %}</script>
+{% endblock %}
