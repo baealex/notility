@@ -60,7 +60,7 @@ def utterances(username, repository, pk):
         'origin': 'https://www.notion.so',
         'crossorigin': 'anonymous',
         'pathname': pk,
-        'url': request.base_url
+        'url': f'https://www.notion.so/{pk}'
     }
     return redirect(f'https://utteranc.es/utterances.html?{urllib.parse.urlencode(parameter)}')
 
