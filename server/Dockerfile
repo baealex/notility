@@ -1,10 +1,12 @@
-FROM python:3.8
+FROM node:14.16.0
 
-COPY ./app/requirements.txt /app/
 WORKDIR /app
-RUN pip3 install -r requirements.txt
 
-COPY ./app /app
+COPY ./src/package.json ./
 
-ENTRYPOINT ["uwsgi"]
-CMD ["--socket", ":5000", "--module", "wsgi", "--enable-threads", "-b", "32768"]
+RUN npm i
+
+COPY ./src/ ./
+
+ENTRYPOINT ["npm", "run"]
+CMD ["start"]

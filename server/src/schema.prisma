@@ -1,0 +1,20 @@
+datasource db {
+    provider = "sqlite"
+    url      = "file:./sqlite.db"
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model Comment {
+    id          Int      @default(autoincrement()) @id
+    paegId      String
+    userAddr    String   @default(value:"")
+    userAgent   String   @default(value:"")
+    username    String   @default(value:"")
+    password    String   @default(value:"")
+    content     String   @default(value:"")
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+}
